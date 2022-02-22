@@ -1,21 +1,21 @@
 {
   "files": {
-    "main.css": "/Marvel/static/css/main.1469c1d5.chunk.css",
-    "main.js": "/Marvel/static/js/main.d4277ee3.chunk.js",
-    "main.js.map": "/Marvel/static/js/main.d4277ee3.chunk.js.map",
-    "runtime-main.js": "/Marvel/static/js/runtime-main.21c96f96.js",
-    "runtime-main.js.map": "/Marvel/static/js/runtime-main.21c96f96.js.map",
-    "static/js/2.5e8bb286.chunk.js": "/Marvel/static/js/2.5e8bb286.chunk.js",
-    "static/js/2.5e8bb286.chunk.js.map": "/Marvel/static/js/2.5e8bb286.chunk.js.map",
-    "index.html": "/Marvel/index.html",
-    "static/css/main.1469c1d5.chunk.css.map": "/Marvel/static/css/main.1469c1d5.chunk.css.map",
-    "static/js/2.5e8bb286.chunk.js.LICENSE.txt": "/Marvel/static/js/2.5e8bb286.chunk.js.LICENSE.txt",
-    "static/media/mjolnir.61f31e18.png": "/Marvel/static/media/mjolnir.61f31e18.png",
-    "static/media/piffle-error.bd2881b9.gif": "/Marvel/static/media/piffle-error.bd2881b9.gif",
-    "static/media/vision.067d4ae1.png": "/Marvel/static/media/vision.067d4ae1.png"
+    "main.css": "/static/css/main.1469c1d5.chunk.css",
+    "main.js": "/static/js/main.d4277ee3.chunk.js",
+    "main.js.map": "/static/js/main.d4277ee3.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.76f7a808.js",
+    "runtime-main.js.map": "/static/js/runtime-main.76f7a808.js.map",
+    "static/js/2.5e8bb286.chunk.js": "/static/js/2.5e8bb286.chunk.js",
+    "static/js/2.5e8bb286.chunk.js.map": "/static/js/2.5e8bb286.chunk.js.map",
+    "index.html": "/index.html",
+    "static/css/main.1469c1d5.chunk.css.map": "/static/css/main.1469c1d5.chunk.css.map",
+    "static/js/2.5e8bb286.chunk.js.LICENSE.txt": "/static/js/2.5e8bb286.chunk.js.LICENSE.txt",
+    "static/media/mjolnir.61f31e18.png": "/static/media/mjolnir.61f31e18.png",
+    "static/media/piffle-error.bd2881b9.gif": "/static/media/piffle-error.bd2881b9.gif",
+    "static/media/vision.067d4ae1.png": "/static/media/vision.067d4ae1.png"
   },
   "entrypoints": [
-    "static/js/runtime-main.21c96f96.js",
+    "static/js/runtime-main.76f7a808.js",
     "static/js/2.5e8bb286.chunk.js",
     "static/css/main.1469c1d5.chunk.css",
     "static/js/main.d4277ee3.chunk.js"
