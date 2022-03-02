@@ -98,7 +98,7 @@ export default CharInfo;
 
 const View = ({character}) => {
 
-    const {name, description, thumbnail, homepage, wiki, comics} = character
+    const {name, description, thumbnail, comics} = character
     const imgNotFound = "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg"
     let styles = {}
     if (thumbnail === imgNotFound) {
