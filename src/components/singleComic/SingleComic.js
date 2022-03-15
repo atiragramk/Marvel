@@ -1,16 +1,57 @@
 import './singleComic.scss';
 import xMen from '../../resources/img/x-men.png';
+import useMarvelServices from '../../services/MarvelServices';
+import {useState, useEffect} from 'react';
+import Spinner from '../spinner/Spinner';
+import ErrorMessage from '../errorMessage/ErrorMessage';
 
-const SingleComic = () => {
+
+
+const SingleComic = (props) => {
+
+    const [comic, setComic] = useState({});
+
+    const {loading, error, getComic, clearError} = useMarvelServices();
+
+    useEffect(() => {
+        updateComic()
+    }, [props.comicId])
+
+
+    const updateComic = () => {
+        const {comicId} = props
+        if (!comicId) {
+          return;
+        }
+        clearError();
+        getComic(comicId)
+            .then(onCharLoaded);
+    }
+
+
+    const onCharLoaded = (comic) => {
+        setComic(comic);
+    }
+
+    const {thumbnail, title, descr, lang, price} = comic;
+    const grid = true
+    const errorMessage = error ? <ErrorMessage grid = {grid}/> : null;
+    const spinner = loading ? <Spinner grid = {grid}/> : null;
+
+
+
+
     return (
         <div className="single-comic">
-            <img src={xMen} alt="x-men" className="single-comic__img"/>
+            {errorMessage}
+            {spinner}
+            <img src={thumbnail} alt="x-men" className="single-comic__img"/>
             <div className="single-comic__info">
-                <h2 className="single-comic__name">X-Men: Days of Future Past</h2>
-                <p className="single-comic__descr">Re-live the legendary first journey into the dystopian future of 2013 - where Sentinels stalk the Earth, and the X-Men are humanity's only hope...until they die! Also featuring the first appearance of Alpha Flight, the return of the Wendigo, the history of the X-Men from Cyclops himself...and a demon for Christmas!?</p>
+                <h2 className="single-comic__name">{title}</h2>
+                <p className="single-comic__descr">{descr}</p>
                 <p className="single-comic__descr">144 pages</p>
-                <p className="single-comic__descr">Language: en-us</p>
-                <div className="single-comic__price">9.99$</div>
+                <p className="single-comic__descr">{`Language: ${lang}`}</p>
+                <div className="single-comic__price">{`${price} $`}</div>
             </div>
             <a href="#" className="single-comic__back">Back to all</a>
         </div>

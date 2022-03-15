@@ -1,5 +1,5 @@
-import { Component } from 'react';
-import MarvelServices from '../../services/MarvelServices';
+import { Component, useEffect, useState } from 'react';
+import useMarvelServices from '../../services/MarvelServices';
 import PropTypes from 'prop-types';
 
 
@@ -10,67 +10,32 @@ import './charInfo.scss';
 import { Fragment } from 'react';
 
 
-class CharInfo extends Component {
+const CharInfo = (props) => {
 
-    state = {
-        character: null,
-        loading: false,
-        error: false
-    }
-    
+    const [character, setCharacter] = useState(null);
 
-    marvelService = new MarvelServices();
+    const {loading, error, getCharacter, clearError} = useMarvelServices();
 
-    componentDidMount() {
-        this.updateChar()
-    }
+    useEffect(() => {
+        updateChar()
+    }, [props.charId])
 
-    componentDidUpdate(prevProps, prevState) {
-        if (this.props.charId !== prevProps.charId) {
-            this.updateChar();
-        }
-    }
 
-    
-    
-    updateChar = () => {
-        const {charId} = this.props
+    const updateChar = () => {
+        const {charId} = props
         if (!charId) {
           return;
         }
-        this.onCharLoading()
-        this.marvelService
-            .getCharacter(charId)
-            .then(this.onCharLoaded)
-            .catch(this.onError);
-    }
-
-    onCharLoading = () => {
-        this.setState({
-            loading:true,
-        })
-    }
-    onCharLoaded = (character) => {
-        this.setState({
-            character, 
-            loading:false,
-        })
-    }
-    onError = () => {
-        this.setState({ 
-            loading:false,
-            error: true
-        })
+        clearError();
+        getCharacter(charId)
+            .then(onCharLoaded);
     }
 
 
+    const onCharLoaded = (character) => {
+        setCharacter(character);
+    }
 
-
-    
-
-
-    render () {
-        const {character, loading, error} = this.state
 
         const skeleton = character || loading || error ? null : <Skeleton/>;
         const errorMessage = error ? <ErrorMessage/> : null;
@@ -86,7 +51,6 @@ class CharInfo extends Component {
             
         </div>
         )
-    }
    
 }
 
@@ -98,7 +62,7 @@ export default CharInfo;
 
 const View = ({character}) => {
 
-    const {name, description, thumbnail, comics} = character
+    const {name, description, thumbnail, homepage, wiki, comics} = character
     const imgNotFound = "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg"
     let styles = {}
     if (thumbnail === imgNotFound) {
@@ -114,10 +78,10 @@ const View = ({character}) => {
                 <div>
                     <div className="char__info-name">{name}</div>
                     <div className="char__btns">
-                        <a href="/" className="button button__main" target="blank">
-                            <div className="inner">homepage</div>
+                        <a href={homepage} className="button button__main" target="blank">
+                            <div className="inner">Homepage</div>
                         </a>
-                        <a href="/" className="button button__secondary" target="blank">
+                        <a href={wiki} className="button button__secondary" target="blank">
                             <div className="inner">Wiki</div>
                         </a>
                     </div>
@@ -147,3 +111,4 @@ const View = ({character}) => {
         
     )
 }
+
