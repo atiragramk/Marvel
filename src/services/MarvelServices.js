@@ -49,15 +49,17 @@ const  useMarvelServices  = () => {
     
     const _transformComics = (comic) => {
         return {
-            price: comic.prices[0].price,
+            price: comic.prices[0].price ? `${comic.prices[0].price} $` : 'Not available',
             title: comic.title,
             thumbnail: comic.thumbnail.path + '.' + comic.thumbnail.extension,
             homepage: comic.urls[0].url,
             id: comic.id,
-            descr: comic.textObjects[0].text,
-            lang: comic.textObjects[0].language
+            descr: comic.description || 'There is no description',
+            lang: comic.textObjects.language || 'en-us',
+            pages: comic.pageCount ? `${comic.pageCount} pages` : 'No information about the number of pages',
         }
     }
+
 
     return {loading, error, getAllCharacters, getCharacter, clearError, getComics, getComic}
 }

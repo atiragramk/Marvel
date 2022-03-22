@@ -1,52 +1,33 @@
-import {useState} from "react";
+import {lazy, Suspense} from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 import AppHeader from "../appHeader/AppHeader";
-import RandomChar from "../randomChar/RandomChar";
-import CharList from "../charList/CharList";
-import CharInfo from "../charInfo/CharInfo";
-import ErrorBoundary from "../errorBoundary/ErrorBoundary";
-import ComicsList from "../comicsList/ComicsList";
-import SingleComic from "../singleComic/SingleComic";
+import Spinner from "../spinner/Spinner";
 
-
-import decoration from '../../resources/img/vision.png';
-
+const MainPage = lazy(() => import('../pages/MainPage'));
+const ComicsPage = lazy(() => import('../pages/ComicsPages'));
+const SingleComicPage = lazy(() => import('../pages/SingleComicPage'));
+const Page404 = lazy(() => import('../pages/404'));
 
 
 const App = () => {
 
-    const [selectedId, setSelectedId] = useState(null);
-    const [comicId, setComicId] = useState(null);
-
-    const getId = (id) => {
-        setSelectedId(id)
-    }
-
-    const getComicId = (id) => {
-        setComicId(id)
-
-    }
-
         return (
-            <div className="app">
-                <AppHeader/>
-                <main>
-                    {/* <ComicsList/> */}
-                    {/* <SingleComic comicId={getComicId}/> */}
-                    <ErrorBoundary>
-                        <RandomChar/>
-                    </ErrorBoundary>
-                    <div className="char__content">
-                        <ErrorBoundary>
-                            <CharList getId={getId}/>
-                        </ErrorBoundary>
-                        <ErrorBoundary>
-                            <CharInfo charId={selectedId}/>
-                        </ErrorBoundary>
-                    </div>
-                    <img className="bg-decoration" src={decoration} alt="vision"/>
-                </main>
-            </div>
+            <Router>
+                <div className="app">
+                    <AppHeader/>
+                    <main>
+                        <Suspense fallback={Spinner}>
+                            <Routes>
+                                <Route path="/" element={<MainPage/>}/>
+                                <Route path="/comics" element={<ComicsPage/>}/>
+                                <Route path="/comics/:comicId" element={<SingleComicPage/>}/>
+                                <Route path="*" element={<Page404/>}/>
+                            </Routes> 
+                        </Suspense>                     
+                    </main>
+                </div>
+            </Router>
         )
     
 }

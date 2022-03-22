@@ -1,4 +1,4 @@
-import Error from './piffle-error.gif'
+import Error from './error.gif'
 
 const ErrorMessage = (props) => {
     return (

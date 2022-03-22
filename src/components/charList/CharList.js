@@ -51,9 +51,9 @@ const CharList = (props) => {
         myRefs.current[index].focus();
     }
 
-        
-        
-        const characters = charactersData.map(({thumbnail, name, id}, i) => {
+
+    function renderItems (arr) {
+        const characters = arr.map(({thumbnail, name, id}, i) => {
             const imgNotFound = "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg"
             let styles = {}
             if (thumbnail === imgNotFound) {
@@ -76,19 +76,23 @@ const CharList = (props) => {
             )
         })
 
-        const grid = true
-
-        const errorMessage = error ? <ErrorMessage grid = {grid}/> : null;
-        const spinner = loading && !loadingMore ? <Spinner grid = {grid}/> : null;
+        return (
+            <ul className="char__grid">
+                {characters}
+            </ul>
+        )
+    }    
+        
+    const items = renderItems(charactersData)
+    const errorMessage = error ? <ErrorMessage/> : null;
+    const spinner = loading && !loadingMore ? <Spinner/> : null;
 
         
     return (
         <div className="char__list">
-            <ul className="char__grid">
-                {errorMessage}
-                {spinner}
-                {characters}
-            </ul>
+            {errorMessage}
+            {spinner}
+            {items}
             <button 
             style={{'display': charEnded ? 'none' : 'block'}}
             disabled={loadingMore}

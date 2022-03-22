@@ -1,15 +1,18 @@
-import './comicsList.scss';
 import useMarvelServices from '../../services/MarvelServices';
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+
 import ErrorMessage from '../errorMessage/ErrorMessage';
 import Spinner from '../spinner/Spinner';
+
+import './comicsList.scss';
 
 const ComicsList = () => {
 
 
     const [comicsData, setComicsData] = useState([]);
     const [loadingMore, setLoadingMore] = useState(false);
-    const [offset, setOffset] = useState(20);
+    const [offset, setOffset] = useState(50);
     const [comicEnded, setComicEnded] = useState(false);
 
     const {loading, error, getComics} =  useMarvelServices();
@@ -35,41 +38,43 @@ const ComicsList = () => {
             .then(onComicsLoaded);
     }
 
-
-    const comics = comicsData.map(({price, title, thumbnail, homepage, id}, i) => {
+    function renderItems (arr) {
+        const comics = arr.map(({price, title, thumbnail, homepage, id}, i) => {
 
         
+            return (
+                <li key={i} className="comics__item">
+                        <Link to={`./${id}`}>
+                            <img src={thumbnail} alt="ultimate war" className="comics__item-img"/>
+                            <div className="comics__item-name">{title}</div>
+                            <div className="comics__item-price">{price}</div>
+                        </Link>
+                </li>
+            )
+        })
 
-        let priceValue = true
-
-        if (price === 0) {
-            priceValue = false 
-        }
-        
         return (
-            <li key={id} className="comics__item">
-                    <a href={homepage} target="blank">
-                        <img src={thumbnail} alt="ultimate war" className="comics__item-img"/>
-                        <div className="comics__item-name">{title}</div>
-                        <div className="comics__item-price">{priceValue ? `${price} $`: `FREE`}</div>
-                    </a>
-            </li>
+            <ul className="comics__grid">
+                {comics}
+            </ul>
+
         )
-    })
-    const grid = true
-    const errorMessage = error ? <ErrorMessage grid = {grid}/> : null;
-    const spinner = loading && !loadingMore ? <Spinner grid = {grid}/> : null;
+    }
+    
+    const items = renderItems(comicsData);
+    const errorMessage = error ? <ErrorMessage/> : null;
+    const spinner = loading && !loadingMore ? <Spinner/> : null;
 
 
 
     return (
         <div className="comics__list">
-            <ul className="comics__grid">
-                {errorMessage}
-                {spinner}
-                {comics}
-            </ul>
+            {errorMessage}
+            {spinner}
+            {items}
+            
             <button 
+            tyle={{'display' : comicEnded ? 'none' : 'block'}}
             disabled={loadingMore}
             onClick={() => updateComics(offset)} 
             className="button button__main button__long">
