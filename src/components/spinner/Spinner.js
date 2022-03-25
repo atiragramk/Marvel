@@ -4,7 +4,7 @@ const Spinner = (props) => {
     return (
 
 
-        <img style={{margin: '0 auto', background: 'none', display: 'block'}} src={spinner} alt="" />
+        <img style={{margin: '0 auto', background: 'inherit', display: 'block'}} src={spinner} alt="" />
 
     )
 }

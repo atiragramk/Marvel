@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import useMarvelServices from '../../services/MarvelServices';
 import PropTypes from 'prop-types';
 
@@ -53,6 +54,8 @@ const CharList = (props) => {
 
 
     function renderItems (arr) {
+      
+        
         const characters = arr.map(({thumbnail, name, id}, i) => {
             const imgNotFound = "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg"
             let styles = {}
@@ -61,24 +64,33 @@ const CharList = (props) => {
             }
 
             return (
-                <li 
-                ref={el => myRefs.current[i] = el} 
-                className="char__item"
-                tabIndex={0} 
-                key={id} 
-                onClick={() => {
-                        props.getId(id);
-                        focusOnItem(i)}}
-                >
-                    <img style={styles} src={thumbnail} alt="abyss"/>
-                    <div className="char__name">{name}</div>
-                </li>
+                    <CSSTransition key={id} timeout={300} classNames="char__item">
+                        <li 
+                            ref={el => myRefs.current[i] = el} 
+                            className="char__item"
+                            tabIndex={0} 
+                            
+                            onClick={() => {
+                                    props.getId(id);
+                                    focusOnItem(i)}}
+                            >
+                                <img style={styles} src={thumbnail} alt="abyss"/>
+                                <div className="char__name">{name}</div>
+                        </li>
+
+                    </CSSTransition>
+
+                
             )
         })
 
         return (
+
             <ul className="char__grid">
-                {characters}
+                <TransitionGroup component={null}>
+                    {characters}
+                </TransitionGroup>
+
             </ul>
         )
     }    
